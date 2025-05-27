@@ -12,7 +12,8 @@ This project features an interactive Splunk dashboard designed to detect and ana
 - CSV dataset (simulated)
 - GitHub
 - ## 📷 Screenshots
-![Dashboard Screenshot](images/dashboard.png)
+[📄 View Dashboard PDF](fraud_dashboard.pdf)
+
 ## 🚀 How to Use
 1. Import the dataset into Splunk (`dataset_sample.csv`)
 2. Copy and run the SPL queries in `queries.spl`
