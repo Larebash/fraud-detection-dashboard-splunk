@@ -1,0 +1,144 @@
+<dashboard version="1.1" theme="light">
+  <label>Common Wealth Fraud Detection Dashboard</label>
+  <row>
+    <panel>
+      <title>Chart 1</title>
+      <chart>
+        <title>Fraud by Category</title>
+        <search>
+          <query>index="fraud_data_csv" sourcetype="csv"
+| stats count by category</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Chart 2</title>
+      <table>
+        <title>Fraud by Age</title>
+        <search>
+          <query>index="fraud_data_csv" sourcetype="csv"
+| stats count by age</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Chart 3</title>
+      <chart>
+        <title>Trend of Total Fraud Amount Over Time</title>
+        <search>
+          <query>index="fraud_data_csv"  sourcetype=csv
+| eval Month=case(step=0, "May", step=1, "June", step=2, "July", step=3, "August")
+| stats sum(eval(if(fraud=1, amount, 0))) as Total_Fraud_Amount by Month</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>chart 4</title>
+      <table>
+        <title>Top 10 Highest Fraud Transactions</title>
+        <search>
+          <query>index="fraud_data_csv"  sourcetype=csv
+| search fraud=1
+| table step customer merchant category amount
+| sort -amount
+| head 10</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Chart 5</title>
+      <chart>
+        <title>Fraud by Gender</title>
+        <search>
+          <query>index="fraud_data_csv"  sourcetype=csv
+| stats count(eval(fraud=1)) as Fraudulent_Transactions by gender</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Chart 6</title>
+      <chart>
+        <title>Top Fraudulent Merchants</title>
+        <search>
+          <query>index="fraud_data_csv"  sourcetype=csv
+| search fraud=1
+| top merchant limit=10</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Chart 7</title>
+      <chart>
+        <title>Fraud by Location</title>
+        <search>
+          <query>index="fraud_data_csv"  sourcetype=csv
+| stats count(eval(fraud=1)) as Fraudulent_Transactions by postcodeOrigin
+| sort -Fraudulent_Transactions</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Chart 8</title>
+      <chart>
+        <title>Count of Fraudulent Payments</title>
+        <search>
+          <query>index="fraud_data_csv" sourcetype="csv"
+| search fraud=1
+| stats count as "Fraudulent Payments"</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">fillerGauge</option>
+      </chart>
+    </panel>
+  </row>
+</dashboard>

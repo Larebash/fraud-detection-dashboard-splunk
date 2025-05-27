@@ -1,0 +1,39 @@
+commonwealth splunk dashboard
+
+Top 10 Highest Fraud Transactions
+
+index="fraud_data_csv"  sourcetype=csv
+| search fraud=1
+| table step customer merchant category amount
+| sort -amount
+| head 10
+
+
+Trend of Total Fraud Amount Over Time (Step)
+
+
+index="fraud_data_csv"  sourcetype=csv
+| eval Month=case(step=0, "May", step=1, "June", step=2, "July", step=3, "August")
+| stats sum(eval(if(fraud=1, amount, 0))) as Total_Fraud_Amount by Month
+
+
+
+
+
+Fraud by Location
+
+index="fraud_data_csv"  sourcetype=csv
+| stats count(eval(fraud=1)) as Fraudulent_Transactions by postcodeOrigin
+| sort -Fraudulent_Transactions
+
+
+Trend of Total Fraud Over Time
+index="fraud_data_csv" sourcetype="csv"
+| search fraud=1
+| eval Month=case(step=0, "May", step=1, "June", step=2, "July", step=3, "August")
+| stats count as "Total Fraud" by Month
+| sort Month
+
+Count of Fraudulent Payments
+| search fraud=1
+| stats count as "Fraudulent Payments"
