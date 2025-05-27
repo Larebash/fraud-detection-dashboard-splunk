@@ -12,7 +12,7 @@ This project features an interactive Splunk dashboard designed to detect and ana
 - CSV dataset (simulated)
 - GitHub
 - ## 📷 Dashboard
-[📄 View Dashboard PDF](fraud_dashboard.pdf)
+[📄 View Dashboard PDF](Fraud_Analysis_Dashboard.pdf.pdf)
 
 ## 🚀 How to Use
 1.  Covert your xlsx file into Csv
